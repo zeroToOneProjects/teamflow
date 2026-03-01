@@ -12,6 +12,11 @@ Convierte ideas, tickets o conversaciones en specs formales de reglas de negocio
 - Hay un ticket externo (Jira, etc.) que necesita formalizarse.
 - Se necesita documentar requisitos antes de planificar.
 
+## Dos espacios, dos propositos
+
+- **`wip/`** = mesa de trabajo. Aqui viven los archivos del lifecycle (spec, plan, tasks, review, state.yaml) mientras se trabaja en un feature. Es temporal.
+- **`specs/`** = resultado final. Cuando un feature se completa (`/done`), la spec formal se mueve al dominio correspondiente en `specs/`. Es la verdad permanente de reglas de negocio.
+
 ## Principios
 
 - **Una spec = un concepto.** Si la idea mezcla funcionalidades independientes, separar en specs distintas. Prueba: si puedes implementar A sin tocar B, son specs distintas.
@@ -21,7 +26,7 @@ Convierte ideas, tickets o conversaciones en specs formales de reglas de negocio
 
 ## El Proceso
 
-1. **Identificar fuente.** "De donde viene este feature?" (manual, Jira, otro). Si es externo, extrae la info via MCP.
+1. **Identificar fuente.** "De donde viene este feature?" (manual, Jira, otro). Si tiene ID de ticket, se usara en el nombre de la carpeta. Si es externo, extrae la info via MCP.
 
 2. **Explorar y descomponer.** Guia al usuario:
    - Que problema resuelve?
@@ -29,20 +34,12 @@ Convierte ideas, tickets o conversaciones en specs formales de reglas de negocio
    - Cuales son los inputs y outputs?
    - Cuales son las reglas de negocio?
 
-3. **Ubicar por dominio.** Las specs se organizan por dominio de negocio:
-   ```
-   .workflow/specs/
-     compliance/
-       age-verification.md
-       camlist-sfw.md
-     payments/
-       payout-rules.md
-     auth/
-       session-management.md
-   ```
-   Pregunta al usuario: "A que dominio pertenece esta spec?" Si el dominio no existe, crearlo.
+3. **Crear carpeta de trabajo.** Crea el directorio en `wip/`:
+   - Con ticket: `.workflow/wip/st-5837_banner-json-rendering/`
+   - Sin ticket: `.workflow/wip/banner-json-rendering/`
+   - Formato: `[id-ticket_]slug-descriptivo` (lowercase, kebab-case)
 
-4. **Generar la spec.** Usa el template `spec.md`. Asegurar que incluye:
+4. **Generar la spec.** Crea `spec.md` en la carpeta de trabajo. Usa el template `spec.md`. Asegurar que incluye:
    - **Dominio formal:** inputs como tabla, constantes del sistema
    - **Reglas de negocio:** logica formal (R1, R2... con notacion clara)
    - **Invariantes:** condiciones que SIEMPRE se cumplen + que NO afecta a esta spec
@@ -50,11 +47,13 @@ Convierte ideas, tickets o conversaciones en specs formales de reglas de negocio
    - **BDD exhaustivo:** escenarios que cubren cada fila de la matriz
    - **Contrato API** (solo si la spec define/modifica un endpoint)
 
-5. **Crear estado.** Crea `state.yaml` en el directorio de la spec con lifecycle en fase `specifying`, estado `draft`.
+5. **Preguntar dominio destino.** "Cuando este feature se complete, a que dominio pertenece la spec?" (compliance, payments, frontend, etc.). Guardarlo en `state.yaml` como `target_domain`.
 
-6. **Si hay detalles de implementacion valiosos** (flows, archivos existentes, bugs conocidos), guardarlos en `_references/` junto a la spec. No mezclar con la spec formal.
+6. **Crear estado.** Crea `state.yaml` en la carpeta de trabajo con lifecycle en fase `specifying`, estado `draft`, y `target_domain`.
 
-7. **Revisar con el usuario.** Presenta la spec. Verificar: "La matriz de estados cubre TODOS los casos?" El usuario itera hasta aprobar.
+7. **Si hay detalles de implementacion valiosos** (flows, archivos existentes, bugs conocidos, coordinacion con otros equipos), guardarlos en `_references/` dentro de la carpeta de trabajo.
+
+8. **Revisar con el usuario.** Presenta la spec. Verificar: "La matriz de estados cubre TODOS los casos?" El usuario itera hasta aprobar.
 
 ## Template
 Busca template en `.workflow/templates/spec.md`. Si no existe, usa la estructura descrita arriba.

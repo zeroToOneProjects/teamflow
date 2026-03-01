@@ -6,7 +6,7 @@ description: "Use when a feature has passed review and needs to be finalized, ar
 # Producing: Finalizacion y Archivado
 
 ## Overview
-Verifica goal-backward contra el spec, archiva el feature y extrae conocimiento a platform specs.
+Verifica goal-backward contra el spec, archiva el feature y extrae conocimiento a platform specs. La spec formal se promueve a `specs/[dominio]/` como verdad permanente.
 
 ## El Proceso
 
@@ -14,8 +14,10 @@ Verifica goal-backward contra el spec, archiva el feature y extrae conocimiento 
 
 2. **Si verificacion falla:** Genera gap report. NO archiva. Regresa a executing con los gaps como tareas.
 
-3. **Si verificacion pasa — Archivar:**
-   - Mueve el directorio del spec a `specs/_archive/`
+3. **Si verificacion pasa — Promover spec y archivar:**
+   - Lee `target_domain` de `state.yaml` (definido durante specifying)
+   - Copia `spec.md` a `.workflow/specs/[target_domain]/[nombre].md` — esta es la verdad permanente de reglas de negocio
+   - Mueve el resto del directorio `wip/` a `_archive/`
    - Genera resumen en `history/summaries/` usando template `summary.md`
 
 4. **Extraer conocimiento:** Revisa si el feature produjo:
@@ -24,7 +26,7 @@ Verifica goal-backward contra el spec, archiva el feature y extrae conocimiento 
    - Platform specs son archivos en `.workflow/platform/` — NUNCA se eliminan, solo se actualizan
    - **Guidelines grandes:** Si un guideline generado o actualizado excede ~20KB, sugiere al usuario convertirlo a skill con `/create-skill` para mejor manejo de contexto.
 
-5. **Limpiar estado:** Remueve el feature activo de `state.md`. Resetea `state.yaml` del feature a `phase: archived`.
+5. **Limpiar estado:** Remueve el feature activo de `state.md`.
 
 ## Siguiente Paso
-"Feature archivado y conocimiento extraido. Usa /spec para el siguiente feature o /status para ver el estado."
+"Feature archivado y spec promovida a specs/[dominio]/. Usa /spec para el siguiente feature o /status para ver el estado."

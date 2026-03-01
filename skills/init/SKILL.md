@@ -39,8 +39,10 @@ Configura TeamFlow en un proyecto nuevo con una conversacion guiada. Genera la e
        architecture.md    # Placeholder: "Actualizar tras primer /done"
        decisions.md       # Vacio, listo para ADRs
      templates/           # Copiar templates del plugin
-     specs/               # Organizado por dominio de negocio
+     specs/               # Specs finales por dominio (verdad permanente)
        [dominio]/         # Un directorio por dominio (auth/, payments/, etc.)
+     wip/                 # Features en progreso (temporal)
+     _archive/            # Features completados
    ```
 
 7. **Generar/actualizar CLAUDE.md.** Si no existe, crear uno minimo:

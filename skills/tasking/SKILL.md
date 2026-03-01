@@ -14,7 +14,7 @@ Desglosa un plan tecnico aprobado en tareas atomicas, con dependencias, paraleli
 
 ## El Proceso
 
-1. **Leer plan y spec.** Abre `.workflow/specs/[dominio]/[spec-name]/plan.md` y `spec.md`. Verifica que el plan este aprobado.
+1. **Leer plan y spec.** Abre `.workflow/wip/[feature-name]/plan.md` y `spec.md`. Verifica que el plan este aprobado.
 
 2. **Desglosar en tareas atomicas.** Cada tarea sigue el formato:
 
@@ -37,7 +37,7 @@ Desglosa un plan tecnico aprobado en tareas atomicas, con dependencias, paraleli
 
 5. **Validar dependencias.** No debe haber ciclos. Si T-003 depende de T-001, y T-001 depende de T-003, hay un error. Resolver reordenando o fusionando.
 
-6. **Crear el archivo.** Escribe `.workflow/specs/[dominio]/[spec-name]/tasks.md`.
+6. **Crear el archivo.** Escribe `.workflow/wip/[feature-name]/tasks.md`.
 
 7. **Actualizar estado.** Mueve `state.yaml` a fase `tasking`, estado `draft`.
 
